@@ -1,0 +1,8 @@
+{
+  "name": "nice-polymer",
+  "description": "An example Polymer application using the Nice PHP Framework",
+  "license": "MIT",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^0.5.0"
+  }
+}
