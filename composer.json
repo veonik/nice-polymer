@@ -3,6 +3,7 @@
     "description": "An example Polymer application built using the Nice PHP Framework",
     "license": "MIT",
     "require": {
-        "nice/framework": "1.0.x-dev"
+        "nice/framework": "1.0.x-dev",
+        "nice/doctrine-dbal": "1.0.x-dev"
     }
 }
