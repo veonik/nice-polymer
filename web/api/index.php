@@ -14,8 +14,10 @@ Symfony\Component\Debug\Debug::enable();
 $app = new Application('dev', true, false);
 $app->appendExtension(new DoctrineDbalExtension(array(
     'database' => array(
-        'driver' => 'pdo_sqlite',
-        'path' => '%app.root_dir%/sqlite.db'
+        'driver'   => 'pdo_mysql',
+        'host'     => '127.0.0.1',
+        'user'     => 'root',
+        'password' => null
 ))));
 
 // Configure your routes
@@ -23,7 +25,7 @@ $app->set('routes', function (RouteCollector $r) {
     $r->addRoute('GET', '/posts.json', function (Application $app) {
         $conn = $app->get('doctrine.dbal.database_connection');
 
-        $results = $conn->executeQuery("SELECT * FROM messages")->fetchAll();
+        $results = $conn->executeQuery("SELECT * FROM polymer.messages")->fetchAll();
 
         $results = array_map(function($result) {
             $result['favorite'] = (bool) $result['favorite'];
@@ -32,17 +34,6 @@ $app->set('routes', function (RouteCollector $r) {
         }, $results);
 
         return new JsonResponse($results);
-    });
-
-    $r->addRoute('POST', '/post/{id}/update.json', function (Application $app, Request $request, $id) {
-        $conn = $app->get('doctrine.dbal.database_connection');
-        $favorite = $request->get('favorite', 'false');
-        $conn->executeQuery('UPDATE messages SET favorite = :favorite WHERE uid = :id', array(
-            'favorite' => $favorite === "true" ? 1 : 0,
-            'id' => $id
-        ));
-
-        return new JsonResponse();
     });
 });
 
