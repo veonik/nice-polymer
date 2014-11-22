@@ -22,7 +22,7 @@ $app->appendExtension(new DoctrineDbalExtension(array(
 
 // Configure your routes
 $app->set('routes', function (RouteCollector $r) {
-    $r->addRoute('GET', '/posts.json', function (Application $app) {
+    $r->map('/posts.json', null, function (Application $app) {
         $conn = $app->get('doctrine.dbal.database_connection');
 
         $results = $conn->executeQuery("SELECT * FROM polymer.messages")->fetchAll();
