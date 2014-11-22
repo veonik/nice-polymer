@@ -60,6 +60,11 @@
       on-core-response="{{postsLoaded}}"
       handleAs="json">
     </core-ajax>
+    <core-ajax id="ajax_fav"
+      url="../api/index.php/post.json"
+      handleAs="json"
+      method="POST">
+    </core-ajax>
   </template>
   <script>
   Polymer('post-service', {
@@ -83,6 +88,9 @@
     setFavorite: function(uid, isFavorite) {
       // no service backend, just log the change
       console.log('Favorite changed: ' + uid + ", now: " + isFavorite);
+      this.$.ajax_fav.params = { favorite: isFavorite };
+      this.$.ajax_fav.url = "api/index.php/post/" + uid + "/update.json";
+      this.$.ajax_fav.go();
     }
   });
   </script>
